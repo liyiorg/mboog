@@ -1,4 +1,4 @@
-# MBOOG
+MBOOG
 ==============
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.liyiorg/mboog/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.liyiorg/mboog/)
 [![GitHub release](https://img.shields.io/github/release/liyiorg/mboog.svg)](https://github.com/liyiorg/mboog/releases)
