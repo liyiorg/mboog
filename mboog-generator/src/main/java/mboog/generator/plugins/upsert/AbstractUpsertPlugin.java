@@ -24,8 +24,6 @@ public abstract class AbstractUpsertPlugin extends PluginAdapter {
 
     private static final String UPSERT_MAPPER_CLASS = PluginsConstants.BASE_SUPPORT_PACKAGE + ".mapper.UpsertMapper";
 
-    private static final String NO_KEY_CLASS = PluginsConstants.BASE_SUPPORT_PACKAGE + ".model.NoKey";
-
     protected boolean canUpsert;
 
     protected String parameterType;

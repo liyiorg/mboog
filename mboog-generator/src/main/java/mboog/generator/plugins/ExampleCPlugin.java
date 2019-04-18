@@ -76,9 +76,7 @@ public class ExampleCPlugin extends PluginAdapter {
         //添加构造项
         Map<String, String> constantMap = new LinkedHashMap<>();
         buildEnumConstant(constantMap, introspectedTable.getPrimaryKeyColumns(), 1, enumUseActualColumnName);
-        buildEnumConstant(constantMap, introspectedTable.getBaseColumns(), 2, enumUseActualColumnName);
-        buildEnumConstant(constantMap, introspectedTable.getBLOBColumns(), 3, enumUseActualColumnName);
-
+        buildEnumConstant(constantMap, introspectedTable.getNonPrimaryKeyColumns(), null, enumUseActualColumnName);
         StringBuilder stringBuilder = new StringBuilder();
         // 添加表注释
         if (!"0".equals(remarks)) {
@@ -135,7 +133,7 @@ public class ExampleCPlugin extends PluginAdapter {
      * @param type                    [1,2,3]
      * @param enumUseActualColumnName enumUseActualColumnName
      */
-    private void buildEnumConstant(Map<String, String> map, List<IntrospectedColumn> introspectedColumns, int type, boolean enumUseActualColumnName) {
+    private void buildEnumConstant(Map<String, String> map, List<IntrospectedColumn> introspectedColumns, Integer type, boolean enumUseActualColumnName) {
         for (IntrospectedColumn column : introspectedColumns) {
             String columnRemark = null;
             if (StringUtility.stringHasValue(column.getRemarks())) {
@@ -150,7 +148,7 @@ public class ExampleCPlugin extends PluginAdapter {
                 }
             }
             String enumName = enumUseActualColumnName ? column.getActualColumnName() : column.getActualColumnName().toUpperCase();
-            String key = String.format("%s(%d, Types.%s, %b, \"%s\")", enumName, type,
+            String key = String.format("%s(%d, Types.%s, %b, \"%s\")", enumName, type == null ? (column.isBLOBColumn() ? 3 : 2) : type,
                     column.getJdbcTypeName(), column.isColumnNameDelimited(), column.getActualColumnName());
             map.put(key, columnRemark);
         }
