@@ -37,7 +37,7 @@ public class RulesDelegatePlugin extends PluginAdapter {
 
     @Override
     public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
-        if (!"VIEW".equalsIgnoreCase(introspectedTable.getTableType())) {
+        if (!"VIEW".equalsIgnoreCase(introspectedTable.getTableType()) && introspectedTable.getGeneratedKey() == null) {
             // 获取所有insert xml element
             Map<String, XmlElement> insertXmlElementMap = document.getRootElement().getElements().stream()
                     .filter(e -> e instanceof XmlElement).map(e -> (XmlElement) e)
