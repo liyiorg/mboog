@@ -1,9 +1,6 @@
 package mboog.support.example;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -35,7 +32,8 @@ public abstract class AbstractExample<M extends AbstractExample, T extends Abstr
 
     /**
      * Ignore value if it's null or empty.
-     * @return  this
+     *
+     * @return this
      */
     public M ignoreNull() {
         return ignoreNull(true);
@@ -69,7 +67,7 @@ public abstract class AbstractExample<M extends AbstractExample, T extends Abstr
      * Set data
      *
      * @param key key
-     * @param t value
+     * @param t   value
      * @param <D> value type
      */
     @Override
@@ -83,6 +81,7 @@ public abstract class AbstractExample<M extends AbstractExample, T extends Abstr
     /**
      * Inner Method <br>
      * Get data
+     *
      * @param key key
      * @param <D> value type
      * @return value
@@ -90,7 +89,10 @@ public abstract class AbstractExample<M extends AbstractExample, T extends Abstr
     @Override
     public <D> D dataGet(String key) {
         if (dataMap != null) {
-            return (D) dataMap.get(key);
+            Object value = dataMap.get(key);
+            if (Objects.nonNull(value)) {
+                return (D) dataMap.get(key);
+            }
         }
         return null;
     }
@@ -98,6 +100,7 @@ public abstract class AbstractExample<M extends AbstractExample, T extends Abstr
     /**
      * Inner Method <br>
      * Get oredCriteria List
+     *
      * @return oredList
      */
     public List<T> getOredCriteria() {
@@ -106,6 +109,7 @@ public abstract class AbstractExample<M extends AbstractExample, T extends Abstr
 
     /**
      * Where join
+     *
      * @return Criteria
      */
     public T or() {
@@ -118,6 +122,7 @@ public abstract class AbstractExample<M extends AbstractExample, T extends Abstr
 
     /**
      * Where join Consumer
+     *
      * @param consumer consumer
      * @return this
      */
@@ -128,6 +133,7 @@ public abstract class AbstractExample<M extends AbstractExample, T extends Abstr
 
     /**
      * Where join
+     *
      * @return Criteria
      */
     public T and() {
@@ -140,6 +146,7 @@ public abstract class AbstractExample<M extends AbstractExample, T extends Abstr
 
     /**
      * Where join Consumer
+     *
      * @param consumer consumer
      * @return this
      */
@@ -151,9 +158,10 @@ public abstract class AbstractExample<M extends AbstractExample, T extends Abstr
     /**
      * Inner Method <br>
      * Create Criteria
+     *
      * @return Criteria
      */
-    protected T createCriteriaInternal() {
+    public T createCriteriaInternal() {
         T criteria = supplier.get();
         criteria.ignoreNull(ignoreNull, ignoreEmpty);
         return criteria;
@@ -162,9 +170,9 @@ public abstract class AbstractExample<M extends AbstractExample, T extends Abstr
     /**
      * Inner Method <br>
      * Set order by
+     *
      * @param orderByClause
      */
-    @Deprecated
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
     }

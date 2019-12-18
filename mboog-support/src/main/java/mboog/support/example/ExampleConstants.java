@@ -1,10 +1,10 @@
 package mboog.support.example;
 
-class ExampleConstants {
+public class ExampleConstants {
 
-    static final String COLUMN_LIST = "columnList";
+    public static final String COLUMN_LIST = "columnList";
 
-    static final String LIMIT_START = "limitStart";
+    public static final String LIMIT_START = "limitStart";
 
-    static final String LIMIT_END = "limitEnd";
+    public static final String LIMIT_END = "limitEnd";
 }

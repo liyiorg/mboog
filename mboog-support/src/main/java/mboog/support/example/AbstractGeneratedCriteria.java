@@ -19,9 +19,9 @@ public abstract class AbstractGeneratedCriteria<C> {
 
     protected static final String PREFIX_AND = "and";
 
-    protected String prefix;
+    protected String prefix = PREFIX_OR;
 
-    protected String prefixInner;
+    protected String prefixInner = PREFIX_AND;
 
     /**
      * Ignore value if it's null or empty.

@@ -6,56 +6,62 @@ import java.util.List;
 /**
  * @author LiYi 2010-09-26
  */
-public class Page<T> implements Serializable {
+public class Page<T> extends LitePage<T> implements Serializable {
 
     private static final long serialVersionUID = -5562537683939089397L;
 
     // 当前页码
-    private long pageNo;
+    private Long pageNo;
 
     // 每页展现多少条记录
-    private long pageSize;
+    private Long pageSize;
 
     // 总记录条数
-    private long total;
+    private Long total;
 
     // 当前记录条数
-    private long current;
+    private Long current;
 
     // 总页数
-    private long totalPage;
-
-    // 承载数据
-    private List<T> data;
+    private Long totalPage;
 
     // 是否有上一页
-    private boolean hasPrev;
+    private Boolean hasPrev;
 
     // 是否有下一页
-    private boolean hasNext;
+    private Boolean hasNext;
 
     // 是否为第一页
-    private boolean first;
+    private Boolean first;
 
     // 是否为最后一页
-    private boolean last;
+    private Boolean last;
 
-    // 下一条数记录的id
-    private String nextId;
+    private List<PageTag> tags;
+
+    public Page() {
+        hasNext = false;
+        hasPrev = false;
+        first = false;
+        last = false;
+        current = 0L;
+    }
 
     public Page(long pageNo, long pageSize) {
+        this();
         this.pageNo = pageNo;
         this.pageSize = pageSize;
     }
 
     public Page(List<T> data, long totalRecord, long page, long pageSize) {
+        this();
         this.pageNo = page;
         if (page < 0)
-            this.pageNo = 1;
+            this.pageNo = 1L;
         this.pageSize = pageSize;
         if (pageSize < 0)
-            this.pageSize = 1;
-        this.current = data.size();
+            this.pageSize = 1L;
+        this.current = Long.valueOf(data.size());
         this.data = data;
         this.total = totalRecord;
         long totalPageNum = this.total / this.pageSize;
@@ -77,75 +83,91 @@ public class Page<T> implements Serializable {
         }
     }
 
-    public long getPageNo() {
+    public Long getPageNo() {
         return pageNo;
     }
 
-    public long getPageSize() {
+    public void setPageNo(Long pageNo) {
+        this.pageNo = pageNo;
+    }
+
+    public Long getPageSize() {
         return pageSize;
     }
 
-    public long getTotalPage() {
+    public void setPageSize(Long pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public Long getTotal() {
+        return total;
+    }
+
+    public void setTotal(Long total) {
+        this.total = total;
+    }
+
+    public Long getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Long current) {
+        this.current = current;
+    }
+
+    public Long getTotalPage() {
         return totalPage;
+    }
+
+    public void setTotalPage(Long totalPage) {
+        this.totalPage = totalPage;
     }
 
     public List<T> getData() {
         return data;
     }
 
-    public void setPageNo(long pageNo) {
-        this.pageNo = pageNo;
-    }
-
-    public void setPageSize(long pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public long getTotal() {
-        return total;
-    }
-
-    public void setTotal(long total) {
-        this.total = total;
-    }
-
-    public long getCurrent() {
-        return current;
-    }
-
-    public void setCurrent(long current) {
-        this.current = current;
-    }
-
-    public void setTotalPage(long totalPage) {
-        this.totalPage = totalPage;
-    }
-
     public void setData(List<T> data) {
         this.data = data;
     }
 
-    public boolean getHasPrev() {
+    public Boolean getHasPrev() {
         return hasPrev;
     }
 
-    public boolean getHasNext() {
+    public void setHasPrev(Boolean hasPrev) {
+        this.hasPrev = hasPrev;
+    }
+
+    public Boolean getHasNext() {
         return hasNext;
     }
 
-    public boolean getFirst() {
+    public void setHasNext(Boolean hasNext) {
+        this.hasNext = hasNext;
+    }
+
+    public Boolean getFirst() {
         return first;
     }
 
-    public boolean getLast() {
+    public void setFirst(Boolean first) {
+        this.first = first;
+    }
+
+    public Boolean getLast() {
         return last;
     }
 
-    public String getNextId() {
-        return nextId;
+    public void setLast(Boolean last) {
+        this.last = last;
     }
 
-    public void setNextId(String nextId) {
-        this.nextId = nextId;
+    public List<PageTag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<PageTag> tags) {
+        this.tags = tags;
     }
 }
