@@ -115,7 +115,7 @@ public class PagingUtil {
 
 
     /**
-     * 中轴页查找 First page
+     * 中轴分页 First page
      *
      * @param dataSort     数据排序方式 AES or DESC
      * @param readMapper   Mapper
@@ -144,7 +144,7 @@ public class PagingUtil {
     }
 
     /**
-     * 中轴页查找 Next page
+     * 中轴分页 Next page
      *
      * @param dataSort     数据排序方式 AES or DESC
      * @param readMapper   Mapper
@@ -152,7 +152,7 @@ public class PagingUtil {
      * @param c            Example.C
      * @param function     Example.C value function
      * @param count        Query count
-     * @param queryId      Query Id value
+     * @param nextId       Next Id value
      * @param pageNo       Page number
      * @param preCount     Page tag count
      * @param preId        Pre Query Id
@@ -170,7 +170,7 @@ public class PagingUtil {
             C c,
             Function<Model, Object> function,
             Integer count,
-            Object queryId,
+            Object nextId,
             Long pageNo,
             Integer preCount,
             Object preId
@@ -188,22 +188,22 @@ public class PagingUtil {
             if (pageNo <= 0) {
                 throw new PagingException("Param pageNo must greater than 0.");
             }
-            if (pageNo > 1 && (Objects.isNull(queryId) || queryId.toString().trim().equals(""))) {
-                throw new PagingException("Param queryId must have value.");
+            if (pageNo > 1 && (Objects.isNull(nextId) || nextId.toString().trim().equals(""))) {
+                throw new PagingException("Param nextId must have value.");
             }
         }
         if (preCount < 2 || (preCount & 1) == 0) {
-            throw new PagingException("Param greater than or equal to 3 and odd.");
+            throw new PagingException("Param preCount must greater than or equal to 3 and odd.");
         }
         if ((Objects.nonNull(preId) && preId.toString().trim().equals(""))) {
             throw new PagingException("Param preId must have value.");
         }
-        return PagingQuery.query(DataSort.AES.equals(dataSort), true, true, readMapper, example, c, function, count, queryId, pageNo, preCount, preId);
+        return PagingQuery.query(DataSort.AES.equals(dataSort), true, true, readMapper, example, c, function, count, nextId, pageNo, preCount, preId);
     }
 
 
     /**
-     * 中轴页查找 Last page
+     * 中轴分页 Last page
      *
      * @param dataSort     数据排序方式 AES or DESC
      * @param readMapper   Mapper
@@ -238,7 +238,7 @@ public class PagingUtil {
             throw new PagingException("Param count must greater than 0.");
         }
         if (preCount < 2 || (preCount & 1) == 0) {
-            throw new PagingException("Param greater than or equal to 3 and odd.");
+            throw new PagingException("Param preCount must greater than or equal to 3 and odd.");
         }
         return PagingQuery.query(DataSort.AES.equals(dataSort), false, true, readMapper, example, c, function, count, null, null, preCount, null);
     }
