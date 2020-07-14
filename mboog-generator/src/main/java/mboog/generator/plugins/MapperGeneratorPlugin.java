@@ -402,6 +402,7 @@ public class MapperGeneratorPlugin extends PluginAdapter {
         return super.sqlMapExampleWhereClauseElementGenerated(element, introspectedTable);
     }
 
+    @Override
     public boolean validate(List<String> warnings) {
         return true;
     }

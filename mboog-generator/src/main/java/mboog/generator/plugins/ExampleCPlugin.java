@@ -154,6 +154,7 @@ public class ExampleCPlugin extends PluginAdapter {
         }
     }
 
+    @Override
     public boolean validate(List<String> warnings) {
         return true;
     }

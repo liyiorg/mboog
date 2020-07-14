@@ -52,6 +52,7 @@ public abstract class AbstractPaginationInterceptor implements Interceptor {
 
     private static Log log = LogFactory.getLog(AbstractPaginationInterceptor.class);
 
+    @Override
     public Object intercept(Invocation invocation) throws Throwable {
 
         Pagination.Limit limit = Pagination.get();

@@ -10,31 +10,49 @@ public class Page<T> extends LitePage<T> implements Serializable {
 
     private static final long serialVersionUID = -5562537683939089397L;
 
-    // 当前页码
+    /**
+     * 当前页码
+     */
     private Long pageNo;
 
-    // 每页展现多少条记录
+    /**
+     * 每页展现多少条记录
+     */
     private Long pageSize;
 
-    // 总记录条数
+    /**
+     * 总记录条数
+     */
     private Long total;
 
-    // 当前记录条数
+    /**
+     * 当前记录条数
+     */
     private Long current;
 
-    // 总页数
+    /**
+     * 总页数
+     */
     private Long totalPage;
 
-    // 是否有上一页
+    /**
+     * 是否有上一页
+     */
     private Boolean hasPrev;
 
-    // 是否有下一页
+    /**
+     * 是否有下一页
+     */
     private Boolean hasNext;
 
-    // 是否为第一页
+    /**
+     * 是否为第一页
+     */
     private Boolean first;
 
-    // 是否为最后一页
+    /**
+     * 是否为最后一页
+     */
     private Boolean last;
 
     private List<PageTag> tags;
@@ -56,11 +74,13 @@ public class Page<T> extends LitePage<T> implements Serializable {
     public Page(List<T> data, long totalRecord, long page, long pageSize) {
         this();
         this.pageNo = page;
-        if (page < 0)
+        if (page < 0) {
             this.pageNo = 1L;
+        }
         this.pageSize = pageSize;
-        if (pageSize < 0)
+        if (pageSize < 0) {
             this.pageSize = 1L;
+        }
         this.current = Long.valueOf(data.size());
         this.data = data;
         this.total = totalRecord;
@@ -78,7 +98,7 @@ public class Page<T> extends LitePage<T> implements Serializable {
         if (pageNo == 1) {
             this.first = true;
         }
-        if (pageNo == totalPage) {
+        if (pageNo.equals(totalPage)) {
             this.last = true;
         }
     }
@@ -123,10 +143,12 @@ public class Page<T> extends LitePage<T> implements Serializable {
         this.totalPage = totalPage;
     }
 
+    @Override
     public List<T> getData() {
         return data;
     }
 
+    @Override
     public void setData(List<T> data) {
         this.data = data;
     }

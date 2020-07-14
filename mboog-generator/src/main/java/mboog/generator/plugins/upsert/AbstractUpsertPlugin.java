@@ -83,6 +83,7 @@ public abstract class AbstractUpsertPlugin extends PluginAdapter {
         return super.clientGenerated(interfaze, topLevelClass, introspectedTable);
     }
 
+    @Override
     public boolean validate(List<String> warnings) {
         return true;
     }

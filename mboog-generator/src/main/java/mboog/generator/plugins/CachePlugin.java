@@ -46,7 +46,6 @@ public class CachePlugin extends PluginAdapter {
                 XmlElement xmlElement_cacheRef = new XmlElement(CacheRefXMLName);
                 xmlElement_cacheRef.addAttribute(new Attribute(CacheRefNamespaceAttributeName, cache));
                 document.getRootElement().addElement(0, xmlElement_cacheRef);
-                // context.getCommentGenerator().addComment(xmlElement_cacheRef);
                 deleteXmlElement(document, CacheXMLName);
             }
         }

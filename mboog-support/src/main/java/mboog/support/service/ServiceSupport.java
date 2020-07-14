@@ -22,10 +22,20 @@ public abstract class ServiceSupport<PrimaryKey, Model, Example, T extends BaseM
     }
 
 
+    /**
+     * 获取 Mapper
+     *
+     * @return Mapper
+     */
     public T getMapper() {
         return mapper;
     }
 
+    /**
+     * 设置 Mapper
+     *
+     * @param mapper Mapper
+     */
     public void setMapper(T mapper) {
         this.mapper = mapper;
     }

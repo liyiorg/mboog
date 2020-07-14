@@ -73,7 +73,7 @@ public abstract class AbstractExample<M extends AbstractExample, T extends Abstr
     @Override
     public <D> void dataSet(String key, D t) {
         if (dataMap == null) {
-            dataMap = new HashMap<>();
+            dataMap = new HashMap<>(6);
         }
         dataMap.put(key, t);
     }

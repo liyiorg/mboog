@@ -90,6 +90,7 @@ public class ColumnListPlugin extends PluginAdapter {
         return super.sqlMapSelectByExampleWithoutBLOBsElementGenerated(element, introspectedTable);
     }
 
+    @Override
     public boolean validate(List<String> warnings) {
         return true;
     }

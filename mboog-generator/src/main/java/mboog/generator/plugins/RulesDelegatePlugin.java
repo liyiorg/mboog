@@ -76,7 +76,7 @@ public class RulesDelegatePlugin extends PluginAdapter {
                 Element element = document.getRootElement().getElements().get(i);
                 if (element instanceof XmlElement) {
                     XmlElement xmlElement = (XmlElement) element;
-                    if (xmlElement.getName().equals("select")) {
+                    if ("select".equals(xmlElement.getName())) {
                         index = i;
                         break;
                     }

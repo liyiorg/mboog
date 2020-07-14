@@ -219,7 +219,7 @@ public class CriterionPlugin extends PluginAdapter {
         StringBuilder sb = new StringBuilder();
         sb.append(introspectedColumn.getJavaProperty());
         sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
-        sb.insert(0, "and"); //$NON-NLS-1$
+        sb.insert(0, "and");
         sb.append(nameFragment);
         method.setName(sb.toString());
         method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
@@ -229,7 +229,7 @@ public class CriterionPlugin extends PluginAdapter {
                         MyBatis3FormattingUtilities.getAliasedActualColumnName(introspectedColumn),
                         operator,
                         introspectedColumn.getJavaProperty()));
-        method.addBodyLine("return (Criteria) this;"); //$NON-NLS-1$
+        method.addBodyLine("return (Criteria) this;");
         return method;
     }
 

@@ -83,9 +83,9 @@ public class CommonWhereClausePlugin extends PluginAdapter {
             if (e instanceof XmlElement) {
                 XmlElement ex = (XmlElement) e;
                 for (Attribute a : ex.getAttributes()) {
-                    if (a.getName().equals("id") && (
-                            a.getValue().equals("Example_Where_Clause")
-                                    || a.getValue().equals("Update_By_Example_Where_Clause"))) {
+                    if ("id".equals(a.getName()) && (
+                            "Example_Where_Clause".equals(a.getValue())
+                                    || "Update_By_Example_Where_Clause".equals(a.getValue()))) {
                         document.getRootElement().addElement(i, sqlElement);
                         finded = true;
                     }
@@ -101,12 +101,12 @@ public class CommonWhereClausePlugin extends PluginAdapter {
         element.getElements().stream()
                 .filter(e -> e instanceof XmlElement)
                 .map(e -> (XmlElement) e)
-                .filter(e -> e.getName().equals("where"))
+                .filter(e -> "where".equals(e.getName()))
                 .peek(e -> {
                     Optional<XmlElement> optional = e.getElements().stream()
                             .filter(s -> s instanceof XmlElement)
                             .map(s -> (XmlElement) s)
-                            .filter(s -> s.getName().equals("foreach")).findAny();
+                            .filter(s -> "foreach".equals(s.getName())).findAny();
                     optional.ifPresent(p -> {
                         XmlElement includeElement = new XmlElement("include");
                         Attribute attribute = new Attribute("refid", "Common_Where_Clause");
@@ -125,6 +125,7 @@ public class CommonWhereClausePlugin extends PluginAdapter {
         return super.sqlMapExampleWhereClauseElementGenerated(element, introspectedTable);
     }
 
+    @Override
     public boolean validate(List<String> warnings) {
         return true;
     }

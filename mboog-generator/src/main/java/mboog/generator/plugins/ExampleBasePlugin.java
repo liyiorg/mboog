@@ -91,19 +91,10 @@ public class ExampleBasePlugin extends PluginAdapter {
                 innerClass.addField(field_serial);
             }
         }
-
-		/*Method instanceMethod = new Method("newInstance");
-		instanceMethod.setStatic(true);
-		instanceMethod.setVisibility(JavaVisibility.PUBLIC);
-		instanceMethod.setReturnType(new FullyQualifiedJavaType(introspectedTable.getExampleType()));
-		instanceMethod.addBodyLine(
-				String.format("return new %s();", MBGStringUtil.shortClassName(introspectedTable.getExampleType())));
-		topLevelClass.addMethod(instanceMethod);
-		context.getCommentGenerator().addGeneralMethodComment(instanceMethod, introspectedTable);*/
-
         return super.modelExampleClassGenerated(topLevelClass, introspectedTable);
     }
 
+    @Override
     public boolean validate(List<String> warnings) {
         return true;
     }

@@ -29,7 +29,7 @@ public class Subtable {
     }
 
     public static void clear() {
-        threadLocal.set(null);
+        threadLocal.remove();
     }
 
     protected static Sub get() {

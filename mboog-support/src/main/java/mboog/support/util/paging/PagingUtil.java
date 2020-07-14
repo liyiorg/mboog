@@ -106,7 +106,7 @@ public class PagingUtil {
             if (pageNo <= 0) {
                 throw new PagingException("Param pageNo must greater than 0.");
             }
-            if (pageNo > 1 && (Objects.isNull(queryId) || queryId.toString().trim().equals(""))) {
+            if (pageNo > 1 && (Objects.isNull(queryId) || "".equals(queryId.toString().trim()))) {
                 throw new PagingException("Param queryId must have value.");
             }
         }
@@ -188,14 +188,14 @@ public class PagingUtil {
             if (pageNo <= 0) {
                 throw new PagingException("Param pageNo must greater than 0.");
             }
-            if (pageNo > 1 && (Objects.isNull(nextId) || nextId.toString().trim().equals(""))) {
+            if (pageNo > 1 && (Objects.isNull(nextId) || "".equals(nextId.toString().trim()))) {
                 throw new PagingException("Param nextId must have value.");
             }
         }
         if (preCount < 2 || (preCount & 1) == 0) {
             throw new PagingException("Param preCount must greater than or equal to 3 and odd.");
         }
-        if ((Objects.nonNull(preId) && preId.toString().trim().equals(""))) {
+        if ((Objects.nonNull(preId) && "".equals(preId.toString().trim()))) {
             throw new PagingException("Param preId must have value.");
         }
         return PagingQuery.query(DataSort.AES.equals(dataSort), true, true, readMapper, example, c, function, count, nextId, pageNo, preCount, preId);

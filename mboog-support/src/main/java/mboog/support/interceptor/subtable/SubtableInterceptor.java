@@ -50,9 +50,12 @@ public class SubtableInterceptor implements Interceptor {
         stringBuilder.append("DELETE\\s+FROM|");
         stringBuilder.append("UPDATE|");
         stringBuilder.append("SELECT\\s+.+\\s+FROM|");
-        stringBuilder.append("REPLACE(\\s+INTO)?|");                    //MySQL
-        stringBuilder.append("MERGE\\s+INTO");                            //Oracle
-        stringBuilder.append(")\\s+[\",`]?)(((\\w+\\.){0,2})\\w+)([\",`]?(\\s+.*)?)");    //[" PostgreSQL] [` MySQL]
+        //MySQL
+        stringBuilder.append("REPLACE(\\s+INTO)?|");
+        //Oracle
+        stringBuilder.append("MERGE\\s+INTO");
+        //[" PostgreSQL] [` MySQL]
+        stringBuilder.append(")\\s+[\",`]?)(((\\w+\\.){0,2})\\w+)([\",`]?(\\s+.*)?)");
         PATTERN = Pattern.compile(stringBuilder.toString(), Pattern.CASE_INSENSITIVE);
     }
 
@@ -79,6 +82,8 @@ public class SubtableInterceptor implements Interceptor {
                         break;
                     case 3:
                         tempSql = matcher.replaceFirst("$1" + subtable.getName() + "$" + (groupCount - 1));
+                        break;
+                    default:
                         break;
                 }
                 // set boundSql

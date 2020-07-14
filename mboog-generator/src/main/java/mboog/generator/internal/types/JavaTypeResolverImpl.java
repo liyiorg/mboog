@@ -51,6 +51,8 @@ public class JavaTypeResolverImpl extends JavaTypeResolverDefaultImpl {
             case Types.NUMERIC:
                 answer = calculateBigDecimalReplacement(column, defaultType);
                 break;
+            default:
+                break;
         }
 
         return answer;
@@ -74,6 +76,8 @@ public class JavaTypeResolverImpl extends JavaTypeResolverDefaultImpl {
                         // MySql type YEAR
                         answer = new FullyQualifiedJavaType(Integer.class.getName());
                     }
+                    break;
+                default:
                     break;
             }
         }

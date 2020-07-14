@@ -37,6 +37,7 @@ public class ColumnIsPlugin extends PluginAdapter {
 		}
 	}
 
+	@Override
 	public boolean validate(List<String> warnings) {
 		return true;
 	}

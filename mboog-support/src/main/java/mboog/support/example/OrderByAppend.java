@@ -5,6 +5,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author LiYi
+ * @param <C>
+ */
 public class OrderByAppend<C extends Enum<C>> {
 
     private static final String DESC = "desc";

@@ -1,5 +1,8 @@
 package mboog.support.example;
 
+/**
+ * @author LiYi
+ */
 public class ExampleConstants {
 
     public static final String COLUMN_LIST = "columnList";

@@ -95,7 +95,7 @@ public abstract class AbstractGeneratedCriteria<C> {
             throw new RuntimeException("Value for " + property + " cannot be null");
         }
 
-        if (value instanceof String && value.toString().trim().equals("")) {
+        if (value instanceof String && "".equals(value.toString().trim())) {
             if (ignoreEmpty) {
                 return;
             }
@@ -128,7 +128,7 @@ public abstract class AbstractGeneratedCriteria<C> {
             }
             throw new RuntimeException("Value for " + property + " cannot be null");
         }
-        if (ignoreEmpty && value.trim().equals("")) {
+        if (ignoreEmpty && "".equals(value.trim())) {
             return;
         }
         String formatValue = pattern.replace("{}", value);
@@ -143,10 +143,10 @@ public abstract class AbstractGeneratedCriteria<C> {
             throw new RuntimeException("Between values for " + property + " cannot be null");
         }
         if (ignoreEmpty) {
-            if (value1 instanceof String && value1.toString().trim().equals("")) {
+            if (value1 instanceof String && "".equals(value1.toString().trim())) {
                 return;
             }
-            if (value2 instanceof String && value2.toString().trim().equals("")) {
+            if (value2 instanceof String && "".equals(value2.toString().trim())) {
                 return;
             }
         }

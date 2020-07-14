@@ -46,7 +46,7 @@ public class Pagination {
      * 清空分页执行状态
      */
     public static void clear() {
-        threadLocal.set(null);
+        threadLocal.remove();
     }
 
     protected static Limit get() {

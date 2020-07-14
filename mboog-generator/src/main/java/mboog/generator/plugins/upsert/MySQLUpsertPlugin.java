@@ -21,7 +21,7 @@ public class MySQLUpsertPlugin extends AbstractUpsertPlugin {
                 Element element = document.getRootElement().getElements().get(i);
                 if (element instanceof XmlElement) {
                     XmlElement xmlElement = (XmlElement) element;
-                    if (xmlElement.getName().equals("insert")) {
+                    if ("insert".equals(xmlElement.getName())) {
                         index = i + 2;
                         break;
                     }

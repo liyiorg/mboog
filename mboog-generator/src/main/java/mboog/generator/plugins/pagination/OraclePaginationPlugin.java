@@ -140,6 +140,7 @@ public class OraclePaginationPlugin extends AbstractPaginationPlugin {
         }
     }
 
+    @Override
     public boolean validate(List<String> warnings) {
         return true;
     }

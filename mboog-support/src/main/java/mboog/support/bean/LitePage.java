@@ -10,13 +10,19 @@ public class LitePage<T> implements Serializable {
 
     private static final long serialVersionUID = 8020924493889392350L;
 
-    // 承载数据
+    /**
+     * 承载数据
+     */
     protected List<T> data;
 
-    // 上一页数记录的id
+    /**
+     * 上一页数记录的id
+     */
     protected Object prevId;
 
-    // 下一页数记录的id
+    /**
+     * 下一页数记录的id
+     */
     protected Object nextId;
 
 

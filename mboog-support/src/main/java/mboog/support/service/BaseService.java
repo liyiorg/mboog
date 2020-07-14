@@ -14,6 +14,12 @@ import mboog.support.mapper.WriteMapper;
  */
 public interface BaseService<PrimaryKey, Model, Example, T extends BaseMapper<PrimaryKey, Model, Example>> {
 
+    /**
+     * 获取 Mapper
+     *
+     * @param <M> Mapper
+     * @return Mapper
+     */
     <M extends T> M mapper();
 
     static class S {

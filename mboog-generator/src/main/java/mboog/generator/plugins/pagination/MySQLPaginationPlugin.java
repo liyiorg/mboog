@@ -28,6 +28,7 @@ public class MySQLPaginationPlugin extends AbstractPaginationPlugin {
         return super.sqlMapUpdateByExampleWithoutBLOBsElementGenerated(element, introspectedTable);
     }
 
+    @Override
     public boolean validate(List<String> warnings) {
         return true;
     }

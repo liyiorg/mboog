@@ -16,6 +16,10 @@ public abstract class AbstractPaginationPlugin extends PluginAdapter {
 
     private static final String PAGINATION_ABLE_CLASS = PluginsConstants.BASE_SUPPORT_PACKAGE + ".example.PaginationAble";
 
+    /**
+     * 获取数据库类型
+     * @return 数据库类型
+     */
     public abstract String getDataBaseType();
 
     @Override
