@@ -1,4 +1,4 @@
-package mboog.support.util.paging;
+package mboog.support.util;
 
 import mboog.support.bean.*;
 import mboog.support.example.AbstractExample;
@@ -31,6 +31,7 @@ public class PagingUtil {
      * @param readMapper    Mapper
      * @param example       Example
      * @param c             Example.C
+     * @param function      Example.C value function
      * @param count         Query count
      * @param queryId       Query Id value
      * @param <PrimaryKey>
@@ -71,6 +72,7 @@ public class PagingUtil {
      * @param readMapper    Mapper
      * @param example       Example
      * @param c             Example.C
+     * @param function      Example.C value function
      * @param count         Query count
      * @param queryId       Query Id value
      * @param pageNo        Page number
