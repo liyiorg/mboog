@@ -44,9 +44,9 @@ public class MySQLUpsertPlugin extends AbstractUpsertPlugin {
                 stringBuilder = new StringBuilder();
                 for (int x = 0; x < 3 && i + x < columns.size(); x++) {
                     IntrospectedColumn column = columns.get(i + x);
-                    stringBuilder.append(String.format("%s = %s",
+                    stringBuilder.append(String.format("%s = values(%s)",
                             MyBatis3FormattingUtilities.getEscapedColumnName(column),
-                            MyBatis3FormattingUtilities.getParameterClause(column)));
+                            MyBatis3FormattingUtilities.getEscapedColumnName(column)));
                     if (i + x < columns.size() - 1) {
                         stringBuilder.append(",");
                     }
@@ -72,9 +72,9 @@ public class MySQLUpsertPlugin extends AbstractUpsertPlugin {
                 IntrospectedColumn column = columns.get(i);
                 XmlElement ifElement = new XmlElement("if");
                 ifElement.addAttribute(new Attribute("test", column.getJavaProperty() + " != null"));
-                ifElement.addElement(new TextElement(String.format("%s = %s,",
+                ifElement.addElement(new TextElement(String.format("%s = values(%s),",
                         MyBatis3FormattingUtilities.getEscapedColumnName(column),
-                        MyBatis3FormattingUtilities.getParameterClause(column))));
+                        MyBatis3FormattingUtilities.getEscapedColumnName(column))));
                 trim.addElement(ifElement);
             }
             document.getRootElement().addElement(index, sqlUpsertSelectiveElement);
