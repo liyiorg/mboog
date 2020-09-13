@@ -2,6 +2,10 @@ MBOOG CHANGELOG
 ===========================
 https://github.com/liyiorg/mboog
 
+Changes in version 1.2.2 (2020-9-13)
+-------------------------------------
+* 更新分页工具
+
 Changes in version 1.2.1 (2020-8-16)
 -------------------------------------
 * 调整 MySQLUpsertPlugin

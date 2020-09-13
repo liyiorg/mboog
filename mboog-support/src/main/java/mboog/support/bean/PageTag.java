@@ -16,9 +16,6 @@ public class PageTag implements Serializable {
 
     private boolean active;
 
-    private Object preId;
-
-
     public long getPageNo() {
         return pageNo;
     }
@@ -41,13 +38,5 @@ public class PageTag implements Serializable {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public Object getPreId() {
-        return preId;
-    }
-
-    public void setPreId(Object preId) {
-        this.preId = preId;
     }
 }

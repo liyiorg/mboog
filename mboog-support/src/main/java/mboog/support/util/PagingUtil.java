@@ -8,7 +8,6 @@ import mboog.support.example.ExampleConstants;
 import mboog.support.exceptions.PagingException;
 import mboog.support.mapper.ReadMapper;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,14 +25,14 @@ public class PagingUtil {
     /**
      * 精简分页
      *
-     * @param dataSort      数据排序方式 AES or DESC
-     * @param direction     动作 PREV or NEXT
-     * @param readMapper    Mapper
-     * @param example       Example
-     * @param c             Example.C
-     * @param function      Example.C value function
-     * @param count         Query count
-     * @param queryId       Query Id value
+     * @param dataSort     数据排序方式 AES or DESC
+     * @param direction    动作 PREV or NEXT
+     * @param readMapper   Mapper
+     * @param example      Example
+     * @param c            Example.C
+     * @param function     Example.C value function
+     * @param count        Query count
+     * @param queryId      Query Id value
      * @param <PrimaryKey>
      * @param <Model>
      * @param <Criteria>
@@ -66,16 +65,16 @@ public class PagingUtil {
     /**
      * 总计分页
      *
-     * @param dataSort      数据排序方式 AES or DESC
-     * @param direction     动作 PREV or NEXT
-     * @param queryTotal    是否查询总记录条数
-     * @param readMapper    Mapper
-     * @param example       Example
-     * @param c             Example.C
-     * @param function      Example.C value function
-     * @param count         Query count
-     * @param queryId       Query Id value
-     * @param pageNo        Page number
+     * @param dataSort     数据排序方式 AES or DESC
+     * @param direction    动作 PREV or NEXT
+     * @param queryTotal   是否查询总记录条数
+     * @param readMapper   Mapper
+     * @param example      Example
+     * @param c            Example.C
+     * @param function     Example.C value function
+     * @param count        Query count
+     * @param queryId      Query Id value
+     * @param pageNo       Page number
      * @param <PrimaryKey>
      * @param <Model>
      * @param <Criteria>
@@ -112,41 +111,12 @@ public class PagingUtil {
                 throw new PagingException("Param queryId must have value.");
             }
         }
-        return PagingQuery.query(DataSort.AES.equals(dataSort), Direction.NEXT.equals(direction), queryTotal, readMapper, example, c, function, count, queryId, pageNo, null, null);
+        return PagingQuery.query(DataSort.AES.equals(dataSort), Direction.NEXT.equals(direction), queryTotal, readMapper, example, c, function, count, queryId, pageNo, null);
     }
 
 
     /**
-     * 中轴分页 First page
-     *
-     * @param dataSort     数据排序方式 AES or DESC
-     * @param readMapper   Mapper
-     * @param example      Example
-     * @param c            Example.C
-     * @param function     Example.C value function
-     * @param count        Query count
-     * @param preCount     Page tag count
-     * @param <PrimaryKey>
-     * @param <Model>
-     * @param <Criteria>
-     * @param <C>
-     * @param <Example>
-     * @return
-     */
-    public static <PrimaryKey, Model, Criteria extends AbstractGeneratedCriteria<?>, C extends Enum<C>, Example extends AbstractExample<Example, Criteria, C>> Page<Model> axisPageFirst(
-            DataSort dataSort,
-            ReadMapper<PrimaryKey, Model, Example> readMapper,
-            Example example,
-            C c,
-            Function<Model, Object> function,
-            Integer count,
-            Integer preCount
-    ) {
-        return axisPageNext(dataSort, readMapper, example, c, function, count, null, null, preCount, null);
-    }
-
-    /**
-     * 中轴分页 Next page
+     * 中轴分页
      *
      * @param dataSort     数据排序方式 AES or DESC
      * @param readMapper   Mapper
@@ -155,9 +125,8 @@ public class PagingUtil {
      * @param function     Example.C value function
      * @param count        Query count
      * @param nextId       Next Id value
-     * @param pageNo       Page number
-     * @param preCount     Page tag count
-     * @param preId        Pre Query Id
+     * @param pageNo       Page number . First page 1 , Last page -1
+     * @param tagCount     Page tag count
      * @param <PrimaryKey>
      * @param <Model>
      * @param <Criteria>
@@ -165,7 +134,7 @@ public class PagingUtil {
      * @param <Example>
      * @return
      */
-    public static <PrimaryKey, Model, Criteria extends AbstractGeneratedCriteria<?>, C extends Enum<C>, Example extends AbstractExample<Example, Criteria, C>> Page<Model> axisPageNext(
+    public static <PrimaryKey, Model, Criteria extends AbstractGeneratedCriteria<?>, C extends Enum<C>, Example extends AbstractExample<Example, Criteria, C>> Page<Model> axisPage(
             DataSort dataSort,
             ReadMapper<PrimaryKey, Model, Example> readMapper,
             Example example,
@@ -174,75 +143,33 @@ public class PagingUtil {
             Integer count,
             Object nextId,
             Long pageNo,
-            Integer preCount,
-            Object preId
+            Integer tagCount
     ) {
         Objects.requireNonNull(dataSort);
         Objects.requireNonNull(readMapper);
         Objects.requireNonNull(example);
         Objects.requireNonNull(c);
         Objects.requireNonNull(function);
-        Objects.requireNonNull(preCount);
+        Objects.requireNonNull(tagCount);
         if (count <= 0) {
             throw new PagingException("Param count must greater than 0.");
         }
-        if (Objects.nonNull(pageNo)) {
-            if (pageNo <= 0) {
-                throw new PagingException("Param pageNo must greater than 0.");
-            }
-            if (pageNo > 1 && (Objects.isNull(nextId) || "".equals(nextId.toString().trim()))) {
-                throw new PagingException("Param nextId must have value.");
-            }
-        }
-        if (preCount < 2 || (preCount & 1) == 0) {
-            throw new PagingException("Param preCount must greater than or equal to 3 and odd.");
-        }
-        if ((Objects.nonNull(preId) && "".equals(preId.toString().trim()))) {
-            throw new PagingException("Param preId must have value.");
-        }
-        return PagingQuery.query(DataSort.AES.equals(dataSort), true, true, readMapper, example, c, function, count, nextId, pageNo, preCount, preId);
-    }
 
-
-    /**
-     * 中轴分页 Last page
-     *
-     * @param dataSort     数据排序方式 AES or DESC
-     * @param readMapper   Mapper
-     * @param example      Example
-     * @param c            Example.C
-     * @param function     Example.C value function
-     * @param count        Query count
-     * @param preCount     Page tag count
-     * @param <PrimaryKey>
-     * @param <Model>
-     * @param <Criteria>
-     * @param <C>
-     * @param <Example>
-     * @return
-     */
-    public static <PrimaryKey, Model, Criteria extends AbstractGeneratedCriteria<?>, C extends Enum<C>, Example extends AbstractExample<Example, Criteria, C>> Page<Model> axisPageLast(
-            DataSort dataSort,
-            ReadMapper<PrimaryKey, Model, Example> readMapper,
-            Example example,
-            C c,
-            Function<Model, Object> function,
-            Integer count,
-            Integer preCount
-    ) {
-        Objects.requireNonNull(dataSort);
-        Objects.requireNonNull(readMapper);
-        Objects.requireNonNull(example);
-        Objects.requireNonNull(c);
-        Objects.requireNonNull(function);
-        Objects.requireNonNull(preCount);
-        if (count <= 0) {
-            throw new PagingException("Param count must greater than 0.");
+        if (tagCount < 2 || (tagCount & 1) == 0) {
+            throw new PagingException("Param tagCount must greater than or equal to 3 and odd.");
         }
-        if (preCount < 2 || (preCount & 1) == 0) {
-            throw new PagingException("Param preCount must greater than or equal to 3 and odd.");
-        }
-        return PagingQuery.query(DataSort.AES.equals(dataSort), false, true, readMapper, example, c, function, count, null, null, preCount, null);
+        return PagingQuery.query(
+                DataSort.AES.equals(dataSort),
+                Objects.isNull(pageNo) || pageNo > 0,
+                true,
+                readMapper,
+                example,
+                c,
+                function,
+                count,
+                Objects.isNull(pageNo) || pageNo <= 1 ? null : nextId,
+                pageNo,
+                tagCount);
     }
 
     private static class PagingQuery {
@@ -263,9 +190,8 @@ public class PagingUtil {
          *                     首页或尾页查询值可以为空。
          * @param pageNo       第N页  <br>
          *                     首页或尾页查询值可以为空。
-         * @param preCount     标记条数 <br>
+         * @param tagCount     标记条数 <br>
          *                     不查询标记页值时设置值为空，标记页发布为奇数。
-         * @param preId        标记页ID <br>
          *                     首页查询值可以为空。
          * @param <PrimaryKey>
          * @param <Model>
@@ -285,8 +211,7 @@ public class PagingUtil {
                 Integer count,
                 Object queryId,
                 Long pageNo,
-                Integer preCount,
-                Object preId
+                Integer tagCount
         ) {
             CInterface cInterface = (CInterface) c;
             // 查询 Page （列表，总数，页数，是否有 上一页， 下一页）
@@ -294,9 +219,9 @@ public class PagingUtil {
             // Example 原查询列
             String columnList = example.dataGet(ExampleConstants.COLUMN_LIST);
             // 查询 tags
-            queryAxis(dataAes, pageNext, readMapper, example, function, count, queryId, pageNo, preCount, preId, cInterface, page);
+            queryAxis(dataAes, pageNext, readMapper, example, function, count, queryId, pageNo, tagCount, c, cInterface, page);
             // 清理 Example
-            cleanExample(queryId, preCount, preId, example, columnList);
+            cleanExample(queryId, tagCount, example, columnList);
             return page;
         }
 
@@ -321,7 +246,18 @@ public class PagingUtil {
          * @param <Example>
          * @return
          */
-        private static <PrimaryKey, Model, Criteria extends AbstractGeneratedCriteria<?>, C extends Enum<C>, Example extends AbstractExample<Example, Criteria, C>> Page<Model> queryPage(boolean dataAes, boolean pageNext, boolean queryTotal, ReadMapper<PrimaryKey, Model, Example> readMapper, Example example, C c, Function<Model, Object> function, Integer count, Object queryId, Long pageNo, CInterface cInterface) {
+        private static <PrimaryKey, Model, Criteria extends AbstractGeneratedCriteria<?>, C extends Enum<C>, Example extends AbstractExample<Example, Criteria, C>> Page<Model> queryPage(
+                boolean dataAes,
+                boolean pageNext,
+                boolean queryTotal,
+                ReadMapper<PrimaryKey, Model, Example> readMapper,
+                Example example,
+                C c,
+                Function<Model, Object> function,
+                Integer count,
+                Object queryId,
+                Long pageNo,
+                CInterface cInterface) {
             Long total = null;
             // 查询总数
             if (queryTotal) {
@@ -451,8 +387,8 @@ public class PagingUtil {
          * @param count
          * @param queryId
          * @param pageNo
-         * @param preCount
-         * @param preId
+         * @param tagCount
+         * @param c
          * @param cInterface
          * @param page
          * @param <PrimaryKey>
@@ -470,36 +406,69 @@ public class PagingUtil {
                 Integer count,
                 Object queryId,
                 Long pageNo,
-                Integer preCount,
-                Object preId,
+                Integer tagCount,
+                C c,
                 CInterface cInterface,
                 Page<Model> page) {
-            if (Objects.isNull(preCount)) {
+            if (Objects.isNull(tagCount)) {
                 return;
             }
             example.dataSet(ExampleConstants.COLUMN_LIST, cInterface.aliasDelimitedName());
             example.dataSet(ExampleConstants.LIMIT_START, 0L);
-            example.dataSet(ExampleConstants.LIMIT_END, Long.valueOf(count * preCount * 2));
+            example.dataSet(ExampleConstants.LIMIT_END, Long.valueOf(count * tagCount * 2));
             if (Objects.nonNull(queryId)) {
                 example.getOredCriteria().remove(0);
             }
-            if (Objects.nonNull(preId)) {
+            List<Object> idList;
+            if (Objects.nonNull(queryId)) {
+                idList = new ArrayList<>();
+                example.dataSet(ExampleConstants.LIMIT_END, Long.valueOf(count * tagCount));
                 Criteria criteriaInternal = example.createCriteriaInternal();
                 criteriaInternal.ignoreNull();
+
+                // 生成向前的Ids-------- start
+                criteriaInternal.addCriterions(n -> {
+                    String condition = dataAes ? " < " : " > ";
+                    n.addCriterion(cInterface.aliasDelimitedName() + condition, queryId, cInterface.getColumnName());
+                });
+                if (dataAes) {
+                    example.orderByDesc(c);
+                } else {
+                    example.orderBy(c);
+                }
+                example.getOredCriteria().add(0, criteriaInternal);
+                List<Object> prevList = readMapper.selectByExample(example).stream().map(function).collect(Collectors.toList());
+                Collections.reverse(prevList);
+                idList.addAll(prevList);
+                // 生成向前的Ids-------- end
+
+                // 生成向后的Ids-------- start
+                criteriaInternal.getCriteria().clear();
                 criteriaInternal.addCriterions(n -> {
                     String condition = dataAes ? " >= " : " <= ";
-                    n.addCriterion(cInterface.aliasDelimitedName() + condition, preId, cInterface.getColumnName());
+                    n.addCriterion(cInterface.aliasDelimitedName() + condition, queryId, cInterface.getColumnName());
                 });
-                example.getOredCriteria().add(0, criteriaInternal);
+                if (dataAes) {
+                    example.orderBy(c);
+                } else {
+                    example.orderByDesc(c);
+                }
+
+
+                List<Object> nextList = readMapper.selectByExample(example).stream().map(function).collect(Collectors.toList());
+                idList.addAll(nextList);
+                // 生成向前的Ids-------- end
+
+            } else {
+                idList = readMapper.selectByExample(example).stream().map(function).collect(Collectors.toList());
             }
-            List<Object> idList = readMapper.selectByExample(example).stream().map(function).collect(Collectors.toList());
             if (!pageNext) {
                 // 从尾页查找
                 Collections.reverse(idList);
             }
+
             List<PageTag> tags = new ArrayList<>();
             int currentDataIndex = -1;
-
             // 确定中轴位置
             if (page.getFirst()) {
                 PageTag pageTag = new PageTag();
@@ -513,7 +482,7 @@ public class PagingUtil {
                         PageTag pageTag = new PageTag();
                         pageTag.setActive(true);
                         pageTag.setNextId(idList.get(currentDataIndex));
-                        pageTag.setPageNo(pageNo == null ? page.getTotalPage() : pageNo);
+                        pageTag.setPageNo(Objects.isNull(pageNo) || pageNo <= 0 ? page.getTotalPage() : pageNo);
                         tags.add(pageTag);
                         break;
                     }
@@ -550,34 +519,34 @@ public class PagingUtil {
                     currentTagIndex = i;
                 }
             }
-            double modifier = BigDecimal.valueOf(currentTagIndex)
-                    .divide(BigDecimal.valueOf(tags.size()), 2)
-                    .multiply(BigDecimal.valueOf(preCount)).doubleValue();
-            // pre 偏移量
-            int modifierValue = preCount - Long.valueOf(Math.round(modifier)).intValue();
-            for (int i = 0; i < tags.size(); i++) {
-                int targetIndex = i - preCount - modifierValue + 1;
-                if (targetIndex >= 0 && targetIndex < tags.size()) {
-                    tags.get(i).setPreId(tags.get(targetIndex).getNextId());
-                }
+
+            // 设置上一页id
+            page.setPrevId(null);
+            if (currentTagIndex - 1 >= 0) {
+                page.setPrevId(tags.get(currentTagIndex - 1).getNextId());
+            }
+            // 设置下一页id
+            page.setNextId(null);
+            if (currentTagIndex + 1 < tags.size()) {
+                page.setNextId(tags.get(currentTagIndex + 1).getNextId());
             }
 
-            if (tags.size() > preCount) {
-                // 截取tag
+            // 截取tag
+            if (tags.size() > tagCount) {
                 List<PageTag> temp = new ArrayList<>();
                 temp.add(tags.get(currentTagIndex));
-                for (int i = 1; i <= preCount; i++) {
+                for (int i = 1; i <= tagCount; i++) {
                     int left = currentTagIndex - i;
                     if (left >= 0) {
                         temp.add(0, tags.get(left));
-                        if (temp.size() == preCount) {
+                        if (temp.size() == tagCount) {
                             break;
                         }
                     }
                     int right = currentTagIndex + i;
                     if (right < tags.size()) {
                         temp.add(tags.get(right));
-                        if (temp.size() == preCount) {
+                        if (temp.size() == tagCount) {
                             break;
                         }
                     }
@@ -586,16 +555,13 @@ public class PagingUtil {
             } else {
                 page.setTags(tags);
             }
-            page.setNextId(null);
-            page.setPrevId(null);
         }
 
         /**
          * 清理Example
          *
          * @param queryId
-         * @param preCount
-         * @param preId
+         * @param tagCount
          * @param example
          * @param columnList
          * @param <Criteria>
@@ -604,18 +570,17 @@ public class PagingUtil {
          */
         private static <Criteria extends AbstractGeneratedCriteria<?>, C extends Enum<C>, Example extends AbstractExample<Example, Criteria, C>> void cleanExample(
                 Object queryId,
-                Integer preCount,
-                Object preId,
+                Integer tagCount,
                 Example example,
                 String columnList) {
-            if (Objects.nonNull(queryId) && Objects.isNull(preCount)
-                    || Objects.nonNull(preCount) && Objects.nonNull(preId)) {
+            /*if (Objects.nonNull(queryId) || Objects.nonNull(tagCount)) {
                 example.getOredCriteria().remove(0);
-            }
+            }*/
             example.setOrderByClause(null);
             example.dataSet(ExampleConstants.LIMIT_START, null);
             example.dataSet(ExampleConstants.LIMIT_END, null);
             example.dataSet(ExampleConstants.COLUMN_LIST, columnList);
         }
     }
+
 }
