@@ -2,6 +2,11 @@ MBOOG CHANGELOG
 ===========================
 https://github.com/liyiorg/mboog
 
+Changes in version 1.2.3 (2020-12-07)
+-------------------------------------
+* 添加 ModelSwaggerPlugin
+* 更新分页工具
+
 Changes in version 1.2.2 (2020-9-13)
 -------------------------------------
 * 更新分页工具
