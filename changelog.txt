@@ -2,6 +2,10 @@ MBOOG CHANGELOG
 ===========================
 https://github.com/liyiorg/mboog
 
+Changes in version 1.2.4 (2022-01-10)
+-------------------------------------
+* 支持 group by 语句拼接
+
 Changes in version 1.2.3 (2020-12-07)
 -------------------------------------
 * 添加 ModelSwaggerPlugin

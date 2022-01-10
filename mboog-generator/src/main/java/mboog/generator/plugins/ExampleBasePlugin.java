@@ -1,16 +1,14 @@
 package mboog.generator.plugins;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
-import org.mybatis.generator.api.dom.java.Field;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.InnerClass;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.java.*;
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.TextElement;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * ExampleBasePlugin Set SuperClass
@@ -93,6 +91,17 @@ public class ExampleBasePlugin extends PluginAdapter {
         }
         return super.modelExampleClassGenerated(topLevelClass, introspectedTable);
     }
+
+    @Override
+    public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(XmlElement element,
+                                                                     IntrospectedTable introspectedTable) {
+        XmlElement groupByElement = new XmlElement("if");
+        groupByElement.addAttribute(new Attribute("test", "groupByClause != null"));
+        groupByElement.addElement(new TextElement("group by ${groupByClause}"));
+        element.addElement(element.getElements().size() - 1, groupByElement);
+        return super.sqlMapUpdateByExampleWithoutBLOBsElementGenerated(element, introspectedTable);
+    }
+
 
     @Override
     public boolean validate(List<String> warnings) {

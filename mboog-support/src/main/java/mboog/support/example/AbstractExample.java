@@ -20,6 +20,8 @@ public abstract class AbstractExample<M extends AbstractExample, T extends Abstr
 
     protected String orderByClause;
 
+    protected String groupByClause;
+
     protected boolean distinct;
 
     protected String databaseType;
@@ -201,8 +203,38 @@ public abstract class AbstractExample<M extends AbstractExample, T extends Abstr
         return (M) this;
     }
 
+    /**
+     * Inner Method <br>
+     * Set group by
+     *
+     * @param groupByClause
+     */
+    public void setGroupByClause(String groupByClause) {
+        this.groupByClause = groupByClause;
+    }
+
+    public M groupBy(String column) {
+        return groupBy(oba -> oba.append(column));
+    }
+
+    public M groupBy(C column) {
+        return groupBy(oba -> oba.append(column));
+    }
+
+    public M groupBy(Consumer<GroupByAppend<C>> consumer) {
+        GroupByAppend groupByAppend = new GroupByAppend<C>();
+        groupByAppend.ignoreNull(this.ignoreNull, this.ignoreEmpty);
+        consumer.accept(groupByAppend);
+        this.groupByClause = groupByAppend.toGroupByString();
+        return (M) this;
+    }
+
     public String getOrderByClause() {
         return orderByClause;
+    }
+
+    public String getGroupByClause() {
+        return groupByClause;
     }
 
     public M distinct(boolean distinct) {
@@ -225,6 +257,7 @@ public abstract class AbstractExample<M extends AbstractExample, T extends Abstr
     public void clear() {
         oredCriteria.clear();
         orderByClause = null;
+        groupByClause = null;
         distinct = false;
         dataMap = null;
         ignoreNull = false;
